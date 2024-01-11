@@ -8,7 +8,7 @@ import os
 
 
 #Load model
-with open('ex_model.pkl', 'rb') as file:
+with open('model.pkl', 'rb') as file:
     model = pickle.load(file)
 
 #Load preprocessor
@@ -56,16 +56,9 @@ speechiness = st.number_input("Speechiness")
 # Numeric Input for Tempo
 tempo = st.number_input("Tempo")
 
-# Set the default time_signature to 0
-time_signature = 0
-def approximate_duration(song_duration_in_minutes):
-    # Round the song duration to the nearest whole number
-    rounded_duration = round(song_duration_in_minutes)
-    return rounded_duration
-
-#Time signature
-time_signature = approximate_duration(song_duration)
-
+# Dropdown for Time signature
+time_sig_options = ['', 2,3,4,5]
+time_signature = st.selectbox("Time signature", time_sig_options)
 
 # Numeric Input for Audio Valence
 audio_valence = st.number_input("Audio Valence")
@@ -92,7 +85,7 @@ user_input = {
 
 # Function to check missing inputs
 def check_missing_inputs(data):
-    return any(value == '' or pd.isna(value) for value in data.values())
+    return any(value == '' for value in data.values())
 
 
 # Function to make predictions
